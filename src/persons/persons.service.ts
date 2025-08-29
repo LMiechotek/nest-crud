@@ -11,6 +11,7 @@ export class PersonsService {
     @InjectRepository(Person)
     private readonly personRepository: Repository<Person>,
   ) { }
+
   async create(createPersonDto: CreatePersonDto) {
     try {
       const personData = {
@@ -31,8 +32,8 @@ export class PersonsService {
     }
   }
 
-  findAll() {
-    const persons = this.personRepository.find({
+  async findAll() {
+    const persons = await this.personRepository.find({
       order: {
         id: 'desc',
       },
@@ -41,8 +42,16 @@ export class PersonsService {
     return persons;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} person`;
+  async findOne(id: number) {
+    const person = await this.personRepository.findOneBy({
+      id,
+    });
+
+    if(!person) {
+      throw new NotFoundException('Pessoa não encontrada.');
+    }
+
+    return person;
   }
 
   async update(id: number, updatePersonDto: UpdatePersonDto) {

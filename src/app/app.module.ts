@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { MessageModule } from '../message/message.module';
+import { MessageModule } from '../message/messages.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PersonsModule } from 'src/persons/persons.module';
 
